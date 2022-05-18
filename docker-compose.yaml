@@ -1,0 +1,25 @@
+version: '3'
+services:
+  caddy:
+    build: './caddy'
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - api
+    volumes:
+      - /data/caddy:/root/.caddy
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '50m'
+  api:
+    build: '.'
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-file: '5'
+        max-size: '50m'
